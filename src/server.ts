@@ -1,14 +1,15 @@
 import http from "http";
 import app from "./app";
+import envConfig from "./config/env.config";
 
-const PORT = process.env.PORT || 3000;
+const PORT = envConfig.PORT;
 const server = http.createServer(app);
 
 // Example: Connect to database here before starting server
 
 server.listen(PORT, () => {
   console.log(
-    ` Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+    ` Server running in ${envConfig.NODE_ENV} mode on port ${PORT}`
   );
 });
 

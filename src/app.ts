@@ -6,9 +6,9 @@ import dotenv from "dotenv";
 // import routes from './routes';
 import { globalErrorHandler } from "./middlewares/error";
 import { AppError } from "./utils/AppError";
+import envConfig from "./config/env.config";
 
 const app: Application = express();
-dotenv.config({ path: "./.env" });
 // 1. GLOBAL MIDDLEWARES
 // Set security HTTP headers
 app.use(helmet());
@@ -20,7 +20,7 @@ app.use(express.json({ limit: "10kb" }));
 app.use(cors());
 
 // Development logging
-if (process.env.NODE_ENV === "development") {
+if (envConfig.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
