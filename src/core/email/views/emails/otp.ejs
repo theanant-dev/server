@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .otp {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            letter-spacing: 5px;
+            margin: 20px 0;
+        }
+
+        .copy-button {
+            background-color: #007bff;
+            border: 0;
+            border-radius: 5px;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 10px 16px;
+        }
+
+        .copy-status {
+            color: #218838;
+            display: inline-block;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>Hello, <%= name %>!</h2>
+        <p>Your one-time password (OTP) for authentication is below. It is valid for 10 minutes.</p>
+        <div class="otp">
+            <%= otp %>
+        </div>
+        <button class="copy-button" type="button" data-otp="<%= otp %>" onclick="copyOtp(this)">
+            Copy OTP
+        </button>
+        <span class="copy-status" aria-live="polite"></span>
+        <p>If you didn't request this, please ignore this email.</p>
+    </div>
+
+    <script>
+        function copyOtp(button) {
+            var otp = button.getAttribute('data-otp');
+            var status = button.nextElementSibling;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(otp).then(function () {
+                    status.textContent = 'Copied';
+                });
+                return;
+            }
+
+            var input = document.createElement('textarea');
+            input.value = otp;
+            input.setAttribute('readonly', '');
+            input.style.position = 'fixed';
+            input.style.opacity = '0';
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            status.textContent = 'Copied';
+        }
+    </script>
+</body>
+
+</html>
